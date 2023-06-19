@@ -1,11 +1,17 @@
-from tkinter import N
 from flask import Flask,jsonify
 
 app = Flask(__name__)
+armstrong_numbers = []
 
 @app.route('/')
 def hello():
-    return 'Hello'
+    return 'Hello type in web address'
+
+
+@app.route('/armstrong', methods=['GET'])
+def get_all_armstrong_numbers():
+       return jsonify(Type='armstrong',numbers=armstrong_numbers)
+
 
 @app.route('/armstrong/<int:n>')
 def armstrong(n):
@@ -21,6 +27,9 @@ def armstrong(n):
         print(f"{copy_n} is an Armstrong number")
         result = {"Number": copy_n,
                   "Armstrong": True}
+        if copy_n not in armstrong_numbers:   
+         armstrong_numbers.append(copy_n)
+         print(armstrong_numbers)
     
     else:
         print(f"{copy_n} is not a Armstrong number")
